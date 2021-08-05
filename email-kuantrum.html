@@ -1,0 +1,331 @@
+{% capture email_title %}
+{% if item_count == 1 %}
+Dejaste un artículo en tu carrito
+{% else %}
+Dejaste artículos en tu carrito
+{% endif %}
+{% endcapture %}
+{% capture email_body %}
+{% if billing_address.first_name %}
+{% if item_count == 1 %}
+Hola {{ billing_address.first_name }}, agregaste un artículo a tu carrito y no completaste tu compra. Puedes completarla
+ahora mientras todavía está disponible.
+{% else %}
+Hola {{ billing_address.first_name }}, agregaste un artículo a tu carrito y no completaste tu compra. Puedes completarla
+ahora mientras todavía está disponible.
+{% endif %}
+{% else %}
+{% if item_count == 1 %}
+Hola, agregaste un artículo a tu carrito y no completaste tu compra. Puedes completarla ahora mientras todavía está
+disponible.
+{% else %}
+Hola, agregaste un artículo a tu carrito y no completaste tu compra. Puedes completarla ahora mientras todavía está
+disponible.
+{% endif %}
+{% endif %}
+{% endcapture %}
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>{{ email_title }}</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" type="text/css" href="/assets/notifications/styles.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap');
+
+        body,
+        p,
+        a,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5 {
+            font-family: 'Open Sans', sans-serif !important;
+            font-size: 15px;
+        }
+
+
+        .button__cell {
+            background-image: linear-gradient(to top, black, grey);        
+        }
+
+        .email_ttl {
+            font-size: 25px;
+            font-weight: 700;
+            color: black;
+        }
+
+        .button__text {
+            font-weight: bold;
+        }
+
+        a,
+        a:hover,
+        a:active,
+        a:visited {
+            color: #000;
+        }
+    </style>
+</head>
+
+<body>
+    <table class="body">
+        <tr>
+            <td>
+                <table class="header row">
+                    <tr>
+                        <td class="header__cell">
+                            <center>
+
+                                <table class="container">
+                                    <tr>
+                                        <td>
+
+                                            <table class="row">
+                                                <tr>
+                                                    <td class="shop-name__cell">
+                                                        <a href="{{shop.url}}">
+                                                            <img src="https://cdn.shopify.com/s/files/1/0363/2077/2233/files/new_logo_kuantrum.png?v=1606768483"
+                                                                alt="{{ shop.name }}" width="128" height="40">
+                                                        </a>
+                                                        <!-- {%- if shop.email_logo_url %}
+                                                        <img src="{{shop.email_logo_url}}" alt="{{ shop.name }}"
+                                                            width="{{ shop.email_logo_width }}">
+                                                        {%- else %}
+                                                        <h1 class="shop-name__text">
+                                                            <a href="{{shop.url}}">{{ shop.name }}</a>
+                                                        </h1>
+                                                        {%- endif %} -->
+                                                    </td>
+
+                                                </tr>
+                                            </table>
+
+                                        </td>
+                                    </tr>
+                                </table>
+
+                            </center>
+                        </td>
+                    </tr>
+                </table>
+
+                <table class="row content">
+                    <tr>
+                        <td class="content__cell">
+                            <center>
+                                <table class="container">
+                                    <tr>
+                                        <td>
+
+                                            <h2 class="email_ttl">¡Hola {{ customer.first_name }}!</h2>
+                                            {% if custom_message != blank %}
+                                                <p>{{ custom_message }}</p>
+                                            {% else %}
+                                            <p>Agregaste {{item_count}} artículo(s) a tu carrito ¡No los dejes ahi!</p>
+                                            <p>Completa tu compra, ahora con nuestros nuevos sistemas de pago totalmente seguros.</p>
+                                            {% endif %}
+                                            <table class="row actions">
+                                                <tr>
+                                                    <td class="empty-line"> </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="actions__cell">
+                                                        <table class="button main-action-cell">
+                                                            <tr>
+                                                                <td class="button__cell">
+                                                                    <a href="{{ url }}"
+                                                                        class="button__text">¡Completar compra!</a>
+                                                                    </td>
+                                                            </tr>
+                                                        </table>
+                                                            <br>
+                                                        {% if shop.url %}
+                                                        <table class="link secondary-action-cell">
+                                                            <tr>
+                                                                <td class="link__cell">
+                                                                    <p
+                                                                    style="text-align: center; margin-top: 24px;">o
+                                                                    Visita <a href="{{ shop.url }}"
+                                                                        style="font-weight: bold;">KUANTRUM.COM</a>
+                                                                </p>
+                                                                    </td>
+                                                            </tr>
+                                                        </table>
+                                                        {% endif %}
+
+                                                    </td>
+                                                </tr>
+                                            </table>
+
+
+                                        </td>
+                                    </tr>
+                                </table>
+                            </center>
+                        </td>
+                    </tr>
+                </table>
+
+                <table class="row section">
+                    <tr>
+                        <td class="section__cell">
+                            <center>
+                                <table class="container">
+                                    <tr>
+                                        <td>
+                                            <h2><b>Este es tu carrito {{ customer.first_name }} </b></h2>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <table class="container">
+                                    <tr>
+                                        <td>
+
+
+                                            <table class="row">
+                                                {% for line in subtotal_line_items %}
+                                                <tr class="order-list__item">
+                                                    <td class="order-list__item__cell">
+                                                        <table>
+                                                            <td>
+                                                                {% if line.image %}
+                                                                <img src="{{ line | img_url: 'compact_cropped' }}"
+                                                                    align="left" width="60" height="60"
+                                                                    class="order-list__product-image" />
+                                                                {% endif %}
+                                                            </td>
+                                                            <td class="order-list__product-description-cell">
+                                                                {% if line.product.title %}
+                                                                {% assign line_title = line.product.title %}
+                                                                {% else %}
+                                                                {% assign line_title = line.title %}
+                                                                {% endif %}
+
+                                                                {% if line.quantity < line.quantity %}
+                                                                {% capture line_display %} {{ line.quantity }} of
+                                                                {{ line.quantity }} {% endcapture %}
+                                                                {% else %}
+                                                                {% assign line_display = line.quantity  %}
+                                                                {% endif %}
+
+                                                                <span
+                                                                    class="order-list__item-title">{{ line_title }} × {{ line_display }}</span><br />
+
+                                                                {% if line.variant.title != 'Default Title' %}
+                                                                <span
+                                                                    class="order-list__item-variant">{{ line.variant.title }}</span><br />
+                                                                {% endif %}
+
+                                                                {% if line.selling_plan_allocation %}
+                                                                <span
+                                                                    class="order-list__item-variant">{{ line.selling_plan_allocation.selling_plan.name }}</span><br />
+                                                                {% endif %}
+
+                                                                {% if line.refunded_quantity > 0 %}
+                                                                <span
+                                                                    class="order-list__item-refunded">Reembolsado</span>
+                                                                {% endif %}
+
+                                                                {% if line.discount_allocations %}
+                                                                {% for discount_allocation in line.discount_allocations %}
+                                                                {% if discount_allocation.discount_application.target_selection != 'all' %}
+                                                                <span class="order-list__item-discount-allocation">
+                                                                    <img src="{{ 'notifications/discounttag.png' | shopify_asset_url }}"
+                                                                        width="18" height="18"
+                                                                        class="discount-tag-icon" />
+                                                                    <span>
+                                                                        {{ discount_allocation.discount_application.title | upcase }}
+                                                                        (-{{ discount_allocation.amount | money }})
+                                                                    </span>
+                                                                </span>
+                                                                {% endif %}
+                                                                {% endfor %}
+                                                                {% endif %}
+                                                            </td>
+                                                        </table>
+                                                    </td>
+                                                </tr>{% endfor %}
+                                            </table>
+
+
+                                        </td>
+                                    </tr>
+                                </table>
+                            </center>
+                        </td>
+                    </tr>
+                </table>
+
+                <table class="row footer">
+                    <tr>
+                        <td class="footer__cell">
+                            <center>
+                                <table class="container">
+                                    <tr>
+                                        <td>
+                                            <p class="disclaimer__subtext" style="text-align: center;">
+                                                Aceptamos los siguientes métodos de pago:
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td  align="center">
+                                            <img style="max-width: 300px; margin: 10px 0;" src="https://cdn.shopify.com/s/files/1/0363/2077/2233/files/METODOS_PAGO.png?v=1620240525" alt="METODOS_PAGO">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <p class="disclaimer__subtext" style="text-align: center;">
+                                                Tu pao está seguro con:
+                                            </p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="center">
+                                            <img style="max-width: 300px; margin: 10px 0;" src="https://cdn.shopify.com/s/files/1/0363/2077/2233/files/PAGO_SEGURO.png?v=1620240525" alt="PAGO_SEGURO">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+
+                                            <p class="disclaimer__subtext" style="text-align: center; margin-bottom: 5px;">Si tienes alguna
+                                                duda, consulta la sección de <span><a
+                                                        href="https://kuantrum.com/pages/preguntas-frecuentes"
+                                                        style="font-weight: 700; color:#000 ;">Preguntas
+                                                        Frecuentes</a></span>.</a></p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="height: 205px;">
+                                            <img style="" src="https://cdn.shopify.com/s/files/1/0363/2077/2233/files/FAN_KINGDOM.png?v=1620240525" alt="FAN_KINGDOM">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div style="background-color: #000;">
+                                                <div style="display: flex; align-items: center; justify-content: center;">
+                                                    <img style="max-width: 40px; margin: 20px 15px;" src="https://cdn.shopify.com/s/files/1/0363/2077/2233/files/FACEBOOK.png?v=1620240525" alt="FACEBOOK">
+                                                    <img style="max-width: 40px; margin: 20px 15px;" src="https://cdn.shopify.com/s/files/1/0363/2077/2233/files/TWITTER.png?v=1620240525" alt="TWITTER">
+                                                    <img style="max-width: 40px; margin: 20px 15px;" src="https://cdn.shopify.com/s/files/1/0363/2077/2233/files/PINTEREST.png?v=1620240525" alt="PINTEREST">
+                                                    <img style="max-width: 40px; margin: 20px 15px;" src="https://cdn.shopify.com/s/files/1/0363/2077/2233/files/INSTAGRAM.png?v=1620240525" alt="INSTAGRAM">
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </center>
+                        </td>
+                    </tr>
+                </table>
+                <img src="{{ 'notifications/spacer.png' | shopify_asset_url }}" class="spacer" height="1" />
+            </td>
+        </tr>
+    </table>
+</body>
+
+</html>

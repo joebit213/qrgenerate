@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <div>
+        <img id="img-dw" src="" alt="">
+        <button id="btn-dw-0">Download</button>
+     </div>
+
+<script>
+// -- Appending a CDN of jQuery to the <body> --
+    var script = document.createElement('script')
+    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.0/FileSaver.min.js'
+    script.classList.add('w-fileS')
+    if (document.getElementsByClassName('w-fileS') == null || !window.jQuery) {
+        document.body.appendChild(script)
+    }
+
+    let btnDownload0 = document.querySelector('#btn-dw-0');
+    let btnDownload1 = document.querySelector('#btn-dw-1');
+    //let img = document.querySelector('#img-dw');
+
+
+    // Must use FileSaver.js 2.0.2 because 2.0.3 has issues.
+    btnDownload0.addEventListener('click', () => {
+    console.log('click')
+        let imagePath = 'https://res.cloudinary.com/dn3s8lyeh/image/upload/v1622119049/image_7.png';
+        let fileName = getFileName('portada.png');
+        saveAs(imagePath, fileName);
+        function getFileName(str) {
+            return str.substring(str.lastIndexOf('/') + 1)
+        }
+    })
+ </script>
+    
+</body>
+</html>
