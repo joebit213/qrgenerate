@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+
+  <div style="display: flex;">
+    
+  <div class="ClickThroughTracking">
+    <div class="card-custom" data-card="1">
+      <img src="https://s3.amazonaws.com/com.offerpop.services.media/images/media/59419b588f4d3325f8063668/609c26e5e09d1e54e77fad30.PNG" class="img-responsive">
+    </div>
+  </div>
+
+  <div class="ClickThroughTracking">
+    <div class="card-custom" data-card="2">
+      <img src="https://s3.amazonaws.com/com.offerpop.services.media/images/media/59419b588f4d3325f8063668/609c26e5e09d1e54e77fad30.PNG" class="img-responsive">
+    </div>
+  </div>
+
+  <div class="ClickThroughTracking">
+    <div class="card-custom" data-card="3">
+      <img src="https://s3.amazonaws.com/com.offerpop.services.media/images/media/59419b588f4d3325f8063668/609c26e5e09d1e54e77fad30.PNG" class="img-responsive">
+    </div>
+  </div>
+  </div>
+
+<div class="btn-box" >
+  <a class="isDisabled btn-link" id="btn_link" href="#"><button>ir al link</button></a>
+</div>
+
+<style>
+  .isDisabled {
+    color: currentColor;
+    cursor: not-allowed;
+    opacity: 0.5;
+    text-decoration: none;
+    pointer-events: none;
+  }
+
+  .btn-link button{
+    padding: 1em 2em;
+    border: none;
+    background: black;
+    color: white;
+  }
+
+  .btn-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2em;
+  }
+</style>
+
+  <script>
+    $(document).ready(()=> {
+      orden = []
+
+      $('.card-custom').click(function(){
+        if (orden.length < 3) {
+          $(this).css('pointer-events','none')
+          orden.push($(this).attr('data-card'))
+          console.log(orden)
+          if (orden.length >= 3) {
+            $('#btn_link').removeClass('isDisabled')
+            if (orden[0] == 3 & orden[2] == 1) {
+              console.log('es 3 primero y 1 ultimo')
+              $('#btn_link').attr('href', '#31')
+
+            } else if (orden[0] == 3 & orden[2] == 2) {
+              console.log('es 3 primero y 2 ultimo')
+              $('#btn_link').attr('href', '#32')
+
+            } else if (orden[0] == 2 & orden[2] == 1) {
+              console.log('es 2 primero y 1 ultimo')
+              $('#btn_link').attr('href', '#21')
+
+            } else if (orden[0] == 2 & orden[2] == 3) {
+              console.log('es 2 primero y 3 ultimo')
+              $('#btn_link').attr('href', '#23')
+
+            } else if (orden[0] == 1 & orden[2] == 2) {
+              console.log('es 1 primero y 2 ultimo')
+              $('#btn_link').attr('href', '#12')
+
+            } else if (orden[0] == 1 & orden[2] == 3) {
+              console.log('es 1 primero y 3 ultimo')
+              $('#btn_link').attr('href', '#13')
+
+            }
+          }
+        }else {
+          console.log('helo')
+        }
+      })
+    })
+  </script>
+
+
+
+</body>
+</html>
